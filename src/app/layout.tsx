@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Cinzel, Hind_Siliguri, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-// Navbar এখান থেকে সরিয়ে দিন, কারণ এটি page.tsx তে আছে
-// import Navbar from "@/components/Navbar"; 
+// ১. Google Analytics ইমপোর্ট করা হলো
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 // English Fonts
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter', display: 'swap' });
@@ -22,8 +22,7 @@ export const metadata: Metadata = {
   title: "শহীদ শরীফ ওসমান হাদীর বিচার চাই | Justice for Hadi",
   description: "জুলাই বিপ্লবীদের অন্যতম কণ্ঠস্বর শরীফ ওসমান হাদীর হত্যার বিচার চাই। ১২ ডিসেম্বর গুলিবিদ্ধ, ১৮ ডিসেম্বর শাহাদাত।",
   
-  // --- এই অংশটুকু মিসিং ছিল ---
-  metadataBase: new URL('https://justiceforhadi.org'), // ডোমেইন না কেনা পর্যন্ত এটিই থাকুক, সমস্যা নেই
+  metadataBase: new URL('https://justiceforhadi.org'), 
   openGraph: {
     title: "শহীদ শরীফ ওসমান হাদীর বিচার চাই",
     description: "অবিলম্বে খুনিদের গ্রেফতার ও ফাঁসি চাই। প্রতিবাদে শামিল হোন।",
@@ -32,7 +31,6 @@ export const metadata: Metadata = {
     locale: 'bn_BD',
     type: 'website',
   },
-  // ---------------------------
 };
 
 export default function RootLayout({
@@ -52,10 +50,12 @@ export default function RootLayout({
         {/* Film Grain Texture */}
         <div className="bg-noise fixed inset-0 pointer-events-none z-[100]" />
         
-        {/* Navbar এখানে দেওয়ার দরকার নেই, page.tsx তে দেওয়াই ভালো (Hero সেকশনের সাথে পজিশনিং ঠিক রাখতে) */}
         <Navbar></Navbar>
         {children}
       </body>
+      
+      {/* ২. এখানে অ্যানালিটিক্স আইডি সেট করা হলো */}
+      <GoogleAnalytics gaId="G-TTH5FNDGJZ" />
     </html>
   );
 }
