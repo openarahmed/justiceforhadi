@@ -1,18 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+// ১. React ইম্পোর্ট করা হলো যাতে টাইপগুলো ঠিকভাবে পায়
+import React, { useState, useEffect } from 'react';
 import { Send, Copy, Check, Mail, Building2, Newspaper, Globe, Megaphone, Edit3, FileText, MapPin } from 'lucide-react';
 
-// ১. টাইপগুলো একদম নির্দিষ্ট করে দেওয়া হলো
+// টাইপ ডেফিনিশন
 type CategoryKey = 'govt' | 'local_media' | 'intl_media' | 'rights';
 type LangKey = 'bn' | 'en';
 
-// ২. ইন্টারফেসে 'string' এর বদলে নির্দিষ্ট 'Key' টাইপ ব্যবহার করা হলো
 interface CategoryData {
-  id: CategoryKey;    // এখানে string দিলে এরর খাবে, তাই CategoryKey দেওয়া হলো
+  id: CategoryKey;
   label: string;
-  lang: LangKey;      // এখানেও LangKey ফিক্সড
-  icon: JSX.Element;
+  lang: LangKey;
+  // ২. JSX.Element এর বদলে React.ReactNode ব্যবহার করা হলো (এটি বেশি সেফ)
+  icon: React.ReactNode;
   emails: string[];
 }
 
@@ -24,13 +25,12 @@ interface ContentData {
 export default function ActionSection() {
   const [copied, setCopied] = useState(false);
   
-  // ৩. স্টেট ইনিশিলাইজেশনের সময় টাইপ বলে দেওয়া হলো
   const [activeTab, setActiveTab] = useState<CategoryKey>('intl_media'); 
   
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
 
-  // ৪. 'Record' টাইপ ব্যবহার করে অবজেক্টের গঠন ফিক্স করা হলো
+  // কনফিগারেশন
   const categories: Record<CategoryKey, CategoryData> = {
     govt: {
       id: 'govt',
@@ -104,7 +104,6 @@ A Grieving Citizen of Bangladesh.`
   };
 
   useEffect(() => {
-    // এখন আর এখানে এরর দেবে না কারণ টাইপগুলো স্ট্রিক্টলি ম্যাচ করছে
     const lang = categories[activeTab].lang;
     setSubject(defaultContent[lang].subject);
     setBody(defaultContent[lang].body);
@@ -148,7 +147,6 @@ A Grieving Citizen of Bangladesh.`
 
            {/* --- ট্যাব সিলেকশন --- */}
            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 md:mb-10">
-              {/* Object.values ব্যবহার করলে টাইপ হারিয়ে যায়, তাই কাস্টিং বা ম্যাপের ভেতরে টাইপ ঠিক রাখা জরুরি */}
               {(Object.values(categories) as CategoryData[]).map((cat) => (
                 <button
                   key={cat.id}
