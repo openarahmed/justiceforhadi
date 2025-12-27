@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Colors - Hadi Revolution Theme */
+  --color-bg-deep: #050505;
+  --color-bg-surface: #121212;
+  
+  --color-primary: #D90429;
+  --color-primary-foreground: #FFFFFF;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-accent-glow: #EF233C;
+  
+  --color-text-main: #FAFAFA;
+  --color-text-muted: #A1A1AA;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Animations */
+  --animate-marquee: marquee 35s linear infinite;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in: fadeIn 1s ease-out forwards;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - 2rem)); }
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 10px #D90429; }
+    to { box-shadow: 0 0 20px #EF233C; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 
+/* Utilities setup */
+/* Matching the React component class 'container-custom' */
+@utility container-custom {
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  width: 100%;
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+/* Base Styles */
+
+html {
+  scroll-behavior: smooth !important;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg-deep);
+  color: var(--color-text-main);
+  /* Added Bangla font first for proper rendering */
+  font-family: var(--font-bangla), var(--font-inter), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Global Heading Style */
+h1, h2, h3, h4, h5, h6 {
+  /* Bangla font mixed with Serif for English numbers/details */
+  font-family: var(--font-bangla), var(--font-cinzel), serif;
 }
